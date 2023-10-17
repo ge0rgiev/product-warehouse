@@ -1,0 +1,593 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Warehouse {
+  id: ID!
+  name: String!
+  isHazardous: Boolean!
+  capacity: Int!
+  usedCapacity: Int!
+  reservedCapacity: Int!
+  inventories: [Inventory!]
+  availableCapacity: Int!
+}
+
+type StockRequest {
+  id: ID!
+  scheduledAt: DateTime!
+  createdAt: DateTime!
+  stockTransfer: StockTransfer!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type StockTransfer {
+  id: ID!
+  amount: Int!
+  transferType: TransferType!
+  status: TransferStatus!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  inventory: Inventory!
+  stockRequest: StockRequest!
+}
+
+"""Enumeration for transfer types"""
+enum TransferType {
+  IMPORT
+  EXPORT
+}
+
+"""Enumeration for transfer statuses"""
+enum TransferStatus {
+  PAST
+  DONE
+  PENDING
+}
+
+type Inventory {
+  id: ID!
+  amount: Int!
+  warehouse: Warehouse!
+  product: Product!
+  stockTransfers: StockTransfer!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Product {
+  id: ID!
+  name: String!
+  sizePerUnit: Int!
+  isHazardous: Boolean!
+  createdBy: User!
+  createdAt: DateTime!
+}
+
+type User {
+  id: ID!
+  email: String!
+  name: String!
+}
+
+type AuthResponse {
+  accessToken: String!
+}
+
+type ProductEdge {
+  """The node containing the Product"""
+  node: Product!
+
+  """Cursor for this node."""
+  cursor: ConnectionCursor!
+}
+
+"""Cursor for paging through collections"""
+scalar ConnectionCursor
+
+type PageInfo {
+  """true if paging forward and there are more records."""
+  hasNextPage: Boolean
+
+  """true if paging backwards and there are more records."""
+  hasPreviousPage: Boolean
+
+  """The cursor of the first returned record."""
+  startCursor: ConnectionCursor
+
+  """The cursor of the last returned record."""
+  endCursor: ConnectionCursor
+}
+
+type ProductConnection {
+  """Paging information"""
+  pageInfo: PageInfo!
+
+  """Array of edges."""
+  edges: [ProductEdge!]!
+}
+
+type ProductAggregateGroupBy {
+  id: ID
+  name: String
+  sizePerUnit: Int
+  isHazardous: Boolean
+  createdAt: DateTime
+}
+
+type ProductCountAggregate {
+  id: Int
+  name: Int
+  sizePerUnit: Int
+  isHazardous: Int
+  createdAt: Int
+}
+
+type ProductSumAggregate {
+  id: Float
+  sizePerUnit: Float
+}
+
+type ProductAvgAggregate {
+  id: Float
+  sizePerUnit: Float
+}
+
+type ProductMinAggregate {
+  id: ID
+  name: String
+  sizePerUnit: Int
+  createdAt: DateTime
+}
+
+type ProductMaxAggregate {
+  id: ID
+  name: String
+  sizePerUnit: Int
+  createdAt: DateTime
+}
+
+type WarehouseEdge {
+  """The node containing the Warehouse"""
+  node: Warehouse!
+
+  """Cursor for this node."""
+  cursor: ConnectionCursor!
+}
+
+type WarehouseConnection {
+  """Paging information"""
+  pageInfo: PageInfo!
+
+  """Array of edges."""
+  edges: [WarehouseEdge!]!
+}
+
+type WarehouseAggregateGroupBy {
+  id: ID
+  name: String
+  isHazardous: Boolean
+  capacity: Int
+}
+
+type WarehouseCountAggregate {
+  id: Int
+  name: Int
+  isHazardous: Int
+  capacity: Int
+}
+
+type WarehouseSumAggregate {
+  id: Float
+  capacity: Float
+}
+
+type WarehouseAvgAggregate {
+  id: Float
+  capacity: Float
+}
+
+type WarehouseMinAggregate {
+  id: ID
+  name: String
+  capacity: Int
+}
+
+type WarehouseMaxAggregate {
+  id: ID
+  name: String
+  capacity: Int
+}
+
+type StockTransferEdge {
+  """The node containing the StockTransfer"""
+  node: StockTransfer!
+
+  """Cursor for this node."""
+  cursor: ConnectionCursor!
+}
+
+type StockTransferConnection {
+  """Paging information"""
+  pageInfo: PageInfo!
+
+  """Array of edges."""
+  edges: [StockTransferEdge!]!
+}
+
+type StockTransferAggregateGroupBy {
+  id: ID
+  amount: Int
+  transferType: TransferType
+  status: TransferStatus
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+type StockTransferCountAggregate {
+  id: Int
+  amount: Int
+  transferType: Int
+  status: Int
+  createdAt: Int
+  updatedAt: Int
+}
+
+type StockTransferSumAggregate {
+  id: Float
+  amount: Float
+}
+
+type StockTransferAvgAggregate {
+  id: Float
+  amount: Float
+}
+
+type StockTransferMinAggregate {
+  id: ID
+  amount: Int
+  transferType: TransferType
+  status: TransferStatus
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+type StockTransferMaxAggregate {
+  id: ID
+  amount: Int
+  transferType: TransferType
+  status: TransferStatus
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+type Query {
+  UserProfile: User!
+  ProductList(
+    """Limit or page results."""
+    paging: CursorPaging! = {first: 10}
+
+    """Specify to filter the records returned."""
+    filter: ProductFilter! = {}
+
+    """Specify to sort results."""
+    sorting: [ProductSort!]! = []
+  ): ProductConnection!
+  WarehouseList(
+    """Limit or page results."""
+    paging: CursorPaging! = {first: 10}
+
+    """Specify to filter the records returned."""
+    filter: WarehouseFilter! = {}
+
+    """Specify to sort results."""
+    sorting: [WarehouseSort!]! = []
+  ): WarehouseConnection!
+  TransferList(
+    """Limit or page results."""
+    paging: CursorPaging! = {first: 10}
+
+    """Specify to filter the records returned."""
+    filter: StockTransferFilter! = {}
+
+    """Specify to sort results."""
+    sorting: [StockTransferSort!]! = []
+  ): StockTransferConnection!
+}
+
+input CursorPaging {
+  """Paginate before opaque cursor"""
+  before: ConnectionCursor
+
+  """Paginate after opaque cursor"""
+  after: ConnectionCursor
+
+  """Paginate first"""
+  first: Int
+
+  """Paginate last"""
+  last: Int
+}
+
+input ProductFilter {
+  and: [ProductFilter!]
+  or: [ProductFilter!]
+  id: IDFilterComparison
+  name: StringFieldComparison
+  sizePerUnit: IntFieldComparison
+  isHazardous: BooleanFieldComparison
+  createdAt: DateFieldComparison
+}
+
+input IDFilterComparison {
+  is: Boolean
+  isNot: Boolean
+  eq: ID
+  neq: ID
+  gt: ID
+  gte: ID
+  lt: ID
+  lte: ID
+  like: ID
+  notLike: ID
+  iLike: ID
+  notILike: ID
+  in: [ID!]
+  notIn: [ID!]
+}
+
+input StringFieldComparison {
+  is: Boolean
+  isNot: Boolean
+  eq: String
+  neq: String
+  gt: String
+  gte: String
+  lt: String
+  lte: String
+  like: String
+  notLike: String
+  iLike: String
+  notILike: String
+  in: [String!]
+  notIn: [String!]
+}
+
+input IntFieldComparison {
+  is: Boolean
+  isNot: Boolean
+  eq: Int
+  neq: Int
+  gt: Int
+  gte: Int
+  lt: Int
+  lte: Int
+  in: [Int!]
+  notIn: [Int!]
+  between: IntFieldComparisonBetween
+  notBetween: IntFieldComparisonBetween
+}
+
+input IntFieldComparisonBetween {
+  lower: Int!
+  upper: Int!
+}
+
+input BooleanFieldComparison {
+  is: Boolean
+  isNot: Boolean
+}
+
+input DateFieldComparison {
+  is: Boolean
+  isNot: Boolean
+  eq: DateTime
+  neq: DateTime
+  gt: DateTime
+  gte: DateTime
+  lt: DateTime
+  lte: DateTime
+  in: [DateTime!]
+  notIn: [DateTime!]
+  between: DateFieldComparisonBetween
+  notBetween: DateFieldComparisonBetween
+}
+
+input DateFieldComparisonBetween {
+  lower: DateTime!
+  upper: DateTime!
+}
+
+input ProductSort {
+  field: ProductSortFields!
+  direction: SortDirection!
+  nulls: SortNulls
+}
+
+enum ProductSortFields {
+  id
+  name
+  sizePerUnit
+  isHazardous
+  createdAt
+}
+
+"""Sort Directions"""
+enum SortDirection {
+  ASC
+  DESC
+}
+
+"""Sort Nulls Options"""
+enum SortNulls {
+  NULLS_FIRST
+  NULLS_LAST
+}
+
+input WarehouseFilter {
+  and: [WarehouseFilter!]
+  or: [WarehouseFilter!]
+  id: IDFilterComparison
+  name: StringFieldComparison
+  isHazardous: BooleanFieldComparison
+  capacity: IntFieldComparison
+}
+
+input WarehouseSort {
+  field: WarehouseSortFields!
+  direction: SortDirection!
+  nulls: SortNulls
+}
+
+enum WarehouseSortFields {
+  id
+  name
+  isHazardous
+  capacity
+}
+
+input StockTransferFilter {
+  and: [StockTransferFilter!]
+  or: [StockTransferFilter!]
+  id: IDFilterComparison
+  amount: IntFieldComparison
+  transferType: TransferTypeFilterComparison
+  status: TransferStatusFilterComparison
+  createdAt: DateFieldComparison
+  updatedAt: DateFieldComparison
+}
+
+input TransferTypeFilterComparison {
+  is: Boolean
+  isNot: Boolean
+  eq: TransferType
+  neq: TransferType
+  gt: TransferType
+  gte: TransferType
+  lt: TransferType
+  lte: TransferType
+  like: TransferType
+  notLike: TransferType
+  iLike: TransferType
+  notILike: TransferType
+  in: [TransferType!]
+  notIn: [TransferType!]
+}
+
+input TransferStatusFilterComparison {
+  is: Boolean
+  isNot: Boolean
+  eq: TransferStatus
+  neq: TransferStatus
+  gt: TransferStatus
+  gte: TransferStatus
+  lt: TransferStatus
+  lte: TransferStatus
+  like: TransferStatus
+  notLike: TransferStatus
+  iLike: TransferStatus
+  notILike: TransferStatus
+  in: [TransferStatus!]
+  notIn: [TransferStatus!]
+}
+
+input StockTransferSort {
+  field: StockTransferSortFields!
+  direction: SortDirection!
+  nulls: SortNulls
+}
+
+enum StockTransferSortFields {
+  id
+  amount
+  transferType
+  status
+  createdAt
+  updatedAt
+}
+
+type Mutation {
+  SignUp(signUpInput: SignUpInput!): AuthResponse!
+  SignIn(signInInput: SignInInput!): AuthResponse!
+  DeleteProduct(deleteProductInput: DeleteProductInput!): Product!
+  CreateProduct(input: CreateOneProductInput!): Product!
+  UpdateProduct(input: UpdateOneProductInput!): Product!
+  CreateWarehouse(input: CreateOneWarehouseInput!): Warehouse!
+  CreatePastImport(createPastImportInput: CreatePastImportInput!): StockTransfer!
+  CreateFutureImport(createFutureImportInput: CreateFutureImportInput!): StockTransfer!
+  CreateExport(createExportInput: CreateExportInput!): StockTransfer!
+}
+
+input SignUpInput {
+  email: String!
+  password: String!
+  name: String!
+}
+
+input SignInInput {
+  email: String!
+  password: String!
+}
+
+input DeleteProductInput {
+  id: Float!
+}
+
+input CreateOneProductInput {
+  """The record to create"""
+  product: CreateProductInput!
+}
+
+input CreateProductInput {
+  name: String!
+  sizePerUnit: Int!
+  isHazardous: Boolean!
+}
+
+input UpdateOneProductInput {
+  """The id of the record to update"""
+  id: ID!
+
+  """The update to apply."""
+  update: UpdateProductInput!
+}
+
+input UpdateProductInput {
+  name: String
+  sizePerUnit: Int
+  isHazardous: Boolean
+}
+
+input CreateOneWarehouseInput {
+  """The record to create"""
+  warehouse: CreateWarehouseInput!
+}
+
+input CreateWarehouseInput {
+  name: String!
+  isHazardous: Boolean!
+  capacity: Int!
+}
+
+input CreatePastImportInput {
+  productId: Int!
+  warehouseId: Int!
+  units: Int!
+}
+
+input CreateFutureImportInput {
+  productId: Int!
+  warehouseId: Int!
+  units: Int!
+  scheduledAt: DateTime!
+}
+
+input CreateExportInput {
+  productId: Int!
+  warehouseId: Int!
+  amount: Int!
+}

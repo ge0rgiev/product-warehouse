@@ -1,0 +1,20 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+          "type": "node",
+          "request": "launch",
+          "name": "NestJs Debug",
+          "program": "${workspaceFolder}/src/main.ts",
+          "preLaunchTask": "tsc: build - tsconfig.json", // This is optional if you are using ts-node directly
+          "outFiles": ["${workspaceFolder}/dist/**/*.js"], // This is optional if you are using ts-node directly
+          "env": { "TS_NODE_PROJECT": "tsconfig.build.json" }, // Only if using ts-node
+          "runtimeArgs": ["-r", "ts-node/register"], // Only if using ts-node
+          "args": ["${workspaceFolder}/src/main.ts"], // Only if using ts-node
+          "autoAttachChildProcesses": true
+        }
+      ]
+}
