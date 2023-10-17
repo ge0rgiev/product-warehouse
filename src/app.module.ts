@@ -13,8 +13,6 @@ import { ProductModule } from './product/product.module';
 import { WarehouseModule } from './warehouse/warehouse.module';
 import { StockTransferModule } from './stock-transfer/stock-transfer.module';
 import { CalculationModule } from './calculation/calculation.module';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 
 @Module({
   imports: [
@@ -35,8 +33,6 @@ import { AppService } from './app.service';
     WarehouseModule,
     StockTransferModule,
     CalculationModule,
-  ],
-  controllers: [AppController],
-  providers: [AppService],
+  ]
 })
 export class AppModule {}
