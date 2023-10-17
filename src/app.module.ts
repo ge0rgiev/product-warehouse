@@ -26,7 +26,6 @@ import { CalculationModule } from './calculation/calculation.module';
       driver: ApolloDriver,
       useClass: GraphqlOptions,
     }),
-    // TODO: ScheduleModule.forRoot()
     UserModule,
     AuthModule,
     ProductModule,
