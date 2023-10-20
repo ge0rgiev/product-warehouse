@@ -1,11 +1,13 @@
 import {
   BeforeUpdate,
   Column,
+  CreateDateColumn,
   Entity,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
   Relation,
+  UpdateDateColumn,
 } from 'typeorm';
 import {
   IDField,
@@ -81,4 +83,10 @@ export class Warehouse {
 
   // used for @Authorize only
   supervisorId: number;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
 }

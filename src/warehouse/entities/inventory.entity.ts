@@ -11,13 +11,7 @@ import {
 import { Warehouse } from './warehouse.entity';
 import { Product } from '../../product/entities/product.entity';
 import { StockTransfer } from '../../stock-transfer/entities/stock-transfer.entity';
-import {
-  Field,
-  GraphQLISODateTime,
-  ID,
-  Int,
-  ObjectType,
-} from '@nestjs/graphql';
+import { GraphQLISODateTime, ID, Int, ObjectType } from '@nestjs/graphql';
 import { FilterableField, IDField } from '@nestjs-query/query-graphql';
 
 @Entity()

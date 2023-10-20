@@ -534,7 +534,7 @@ input SignInInput {
 }
 
 input DeleteProductInput {
-  id: Float!
+  id: Int!
 }
 
 input CreateOneProductInput {

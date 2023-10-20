@@ -2,6 +2,7 @@ import { ObjectType, Int, ID, Field } from '@nestjs/graphql';
 import {
   Column,
   CreateDateColumn,
+  DeleteDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
@@ -62,8 +63,11 @@ export class Product {
   @OneToMany(() => Inventory, (inventory) => inventory.product)
   inventories: Relation<Inventory>;
 
-  @Column({ default: false })
-  isDeleted: boolean;
+  // @Column({ default: false })
+  // isDeleted: boolean;
+
+  // used for @Authorize only
+  createdById: number;
 
   @CreateDateColumn()
   @FilterableField()
@@ -72,6 +76,6 @@ export class Product {
   @UpdateDateColumn({ nullable: true })
   updatedAt: Date;
 
-  // used for @Authorize only
-  createdById: number;
+  @DeleteDateColumn()
+  deletedAt?: Date;
 }

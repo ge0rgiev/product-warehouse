@@ -4,8 +4,11 @@ import { NestjsQueryGraphQLModule } from '@nestjs-query/query-graphql';
 import { NestjsQueryTypeOrmModule } from '@nestjs-query/query-typeorm';
 import { Product } from './entities/product.entity';
 import { JwtAuthGuard } from '../shared/guard/jwt-auth.guard';
-import { CreateProductInput } from './dto/create-product.input';
-import { UpdateProductInput } from './dto/update-product.input';
+import {
+  CreateProductInput,
+  UpdateProductInput,
+  DeleteProductInput,
+} from './dto';
 import { ProductResolver } from './product.resolver';
 import { ProductService } from './product.service';
 
@@ -33,7 +36,12 @@ import { ProductService } from './product.service';
             one: { name: 'UpdateProduct' },
             many: { disabled: true },
           },
-          delete: { disabled: true },
+          delete: {
+            // DeleteOneInput: DeleteProductInput,
+            // one: { name: 'DeleteProduct' },
+            one: { disabled: true },
+            many: { disabled: true },
+          },
         },
       ],
     }),

@@ -14,7 +14,7 @@ RUN yarn install --production --frozen-lockfile && yarn cache clean
 COPY . .
 
 # Compile TypeScript into JavaScript
-RUN npm run build
+RUN yarn run build
 
 # Expose the NestJS application port
 EXPOSE 3000

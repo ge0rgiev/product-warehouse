@@ -1,4 +1,4 @@
-import { BadRequestException, UseGuards } from '@nestjs/common';
+import { UnauthorizedException, UseGuards } from '@nestjs/common';
 import { Resolver, Mutation, Args } from '@nestjs/graphql';
 import { CurrentUser } from '../shared/decorator/current-user.decorator';
 import { JwtAuthGuard } from '../shared/guard/jwt-auth.guard';
@@ -15,13 +15,17 @@ export class ProductResolver {
   @Mutation(() => Product, { name: 'DeleteProduct' })
   async deleteProduct(
     @CurrentUser() { id: userId }: User,
-    @Args('deleteProductInput') { id }: DeleteProductInput,
+    @Args('deleteProductInput') { id: productId }: DeleteProductInput,
   ): Promise<Product> {
-    const product = await this.productService.findById(id);
-    // TODO
-    // if (product.createdById !== userId) {
-    //   throw new BadRequestException();
-    // }
-    return this.productService.softDelete(product);
+    try {
+      const product = await this.productService.findById(productId);
+      if (product.createdBy.id !== userId) {
+        throw new UnauthorizedException();
+      }
+      await this.productService.softDelete(product.id);
+      return product;
+    } catch (err) {
+      throw new UnauthorizedException('The product doesn`t exists.');
+    }
   }
 }

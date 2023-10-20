@@ -11,10 +11,14 @@ export class ProductService {
   ) {}
 
   async findById(id: number): Promise<Product> {
-    return this.productRespository.findOneBy({ id });
+    return this.productRespository.findOneOrFail({
+      where: { id },
+      relations: ['createdBy'],
+    });
   }
 
-  async softDelete(product: Product): Promise<Product> {
-    return this.productRespository.save({ ...product, isDeleted: true });
+  async softDelete(productId: number): Promise<boolean> {
+    const { affected } = await this.productRespository.softDelete(productId);
+    return affected === 1;
   }
 }
