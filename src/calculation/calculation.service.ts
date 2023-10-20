@@ -26,7 +26,7 @@ export class CalculationService {
         'warehouse.supervisorId = user.id',
       )
       .where('product.id = :productId', { productId })
-      .andWhere('product.isDeleted = false')
+      .andWhere('product.deletedAt IS NULL')
       .andWhere('warehouse.id = :warehouseId', { warehouseId })
       .andWhere('user.id = :userId', { userId })
       .getCount();

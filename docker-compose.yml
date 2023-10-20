@@ -19,11 +19,11 @@ services:
     env_file:
       - ./.env.docker
     ports:
-      - '${DB_PORT:-5432}:5432'
+      - '${DATABASE_PORT:-5432}:5432'
     environment:
-      POSTGRES_USER: ${DB_USERNAME}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DATABASE_USERNAME}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_DB: ${DATABASE_NAME}
     volumes:
       - pgdata:/var/lib/postgresql/data
 

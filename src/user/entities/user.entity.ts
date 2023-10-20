@@ -1,10 +1,12 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 import {
   Column,
+  CreateDateColumn,
   Entity,
   OneToMany,
   PrimaryGeneratedColumn,
   Relation,
+  UpdateDateColumn,
 } from 'typeorm';
 import { Product } from '../../product/entities/product.entity';
 import { Warehouse } from '../../warehouse/entities/warehouse.entity';
@@ -32,4 +34,10 @@ export class User {
 
   @OneToMany(() => Warehouse, (warehouse) => warehouse.supervisor)
   warehouses?: Relation<Warehouse>;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
 }

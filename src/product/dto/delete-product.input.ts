@@ -1,9 +1,9 @@
-import { InputType, Field, ID } from '@nestjs/graphql';
+import { InputType, Field, Int } from '@nestjs/graphql';
 import { IsNumber } from 'class-validator';
 
 @InputType()
 export class DeleteProductInput {
   @IsNumber()
-  @Field()
+  @Field(() => Int)
   id: number;
 }
